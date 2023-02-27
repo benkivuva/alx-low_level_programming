@@ -8,23 +8,36 @@
  */
 int _atoi(char *s)
 {
-	int sign = 1, result = 0;
+	int sign = 1;
+	int num = 0;
+	int i = 0;
 
-	while (*s)
+	if (s[i] == '-')
 	{
-		if (*s == '-')
-			sign = -sign;
-
-		if (*s >= '0' && *s <= '9')
-		{
-			result = result * 10 + (*s - '0');
-
-			if (*(s + 1) < '0' || *(s + 1) > '9')
-				break;
-		}
-
-		s++;
+		sign = -1;
+		i++;
 	}
 
-	return (result * sign);
+	while (s[i])
+	{
+		if (s[i] >= '0' && s[i] <= '9')
+		{
+			num = num * 10 + (s[i] - '0');
+
+			/* Check for overflow */
+			if ((num > 0 && num < INT_MIN / 10) ||
+				(num < 0 && num > INT_MAX / 10))
+			{
+				return (0);
+			}
+		}
+		else if (num != 0)
+		{
+			break;
+		}
+
+		i++;
+	}
+
+	return (num * sign);
 }
