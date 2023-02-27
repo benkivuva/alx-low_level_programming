@@ -1,4 +1,4 @@
-#include <unistd.h>
+#include "main.h"
 
 /**
  * print_rev - prints a string in reverse order followed by a new line
@@ -10,15 +10,17 @@ void print_rev(char *s)
 {
 	int length = 0;
 
+	/* Find the length of the string */
 	while (*(s + length) != '\0')
 	{
 		length++;
 	}
 
+	/* Print the string in reverse order */
 	for (int i = length - 1; i >= 0; i--)
 	{
-		write(STDOUT_FILENO, s + i, 1);
+		_putchar(*(s + i));
 	}
 
-	write(STDOUT_FILENO, "\n", 1);
+	_putchar('\n');
 }
