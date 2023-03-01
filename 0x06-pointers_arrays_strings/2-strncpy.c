@@ -1,5 +1,3 @@
-#include <main.h>
-
 /**
  * _strncpy - Copies a string up to n bytes
  * @dest: Pointer to destination string
