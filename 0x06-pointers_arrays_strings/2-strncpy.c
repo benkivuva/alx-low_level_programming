@@ -1,34 +1,27 @@
 /**
- * _strncat - Concatenates two strings up to n bytes
+ * _strncpy - Copies a string up to n bytes
  * @dest: Pointer to destination string
  * @src: Pointer to source string
- * @n: Maximum number of bytes to concatenate from src
+ * @n: Maximum number of bytes to copy from src
  *
- * Return: Pointer to concatenated string
+ * Return: Pointer to copied string
  */
-char *_strncat(char *dest, char *src, int n)
+char *_strncpy(char *dest, char *src, int n)
 {
-	int i, j;
+	int i;
 
-	/* Find the end of the destination string */
-	i = 0;
-	while (dest[i] != '\0')
+	/* Copy up to n characters from src to dest */
+	for (i = 0; i < n && src[i] != '\0'; i++)
 	{
-		i++;
+		dest[i] = src[i];
 	}
 
-	/* Append the source string to the destination string */
-	j = 0;
-	while (src[j] != '\0' && j < n)
+	/* Pad dest with null bytes if necessary */
+	for ( ; i < n; i++)
 	{
-		dest[i] = src[j];
-		i++;
-		j++;
+		dest[i] = '\0';
 	}
 
-	/* Add a null terminator to the end of the concatenated string */
-	dest[i] = '\0';
-
-	/* Return a pointer to the concatenated string */
+	/* Return a pointer to the copied string */
 	return (dest);
 }

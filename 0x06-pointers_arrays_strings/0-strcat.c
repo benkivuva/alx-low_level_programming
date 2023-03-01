@@ -1,12 +1,11 @@
 /**
- * _strncat - Concatenates two strings up to n bytes
+ * _strcat - Concatenates two strings
  * @dest: Pointer to destination string
  * @src: Pointer to source string
- * @n: Maximum number of bytes to concatenate from src
  *
  * Return: Pointer to concatenated string
  */
-char *_strncat(char *dest, char *src, int n)
+char *_strcat(char *dest, char *src)
 {
 	int i, j;
 
@@ -19,7 +18,7 @@ char *_strncat(char *dest, char *src, int n)
 
 	/* Append the source string to the destination string */
 	j = 0;
-	while (src[j] != '\0' && j < n)
+	while (src[j] != '\0')
 	{
 		dest[i] = src[j];
 		i++;
