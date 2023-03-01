@@ -1,3 +1,5 @@
+#include <main.h>
+
 /**
  * _strncat - Concatenates two strings up to n bytes
  * @dest: Pointer to destination string
