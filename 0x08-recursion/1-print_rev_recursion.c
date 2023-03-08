@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
  * _print_rev_recursion - prints a string in reverse
@@ -11,5 +11,5 @@ void _print_rev_recursion(char *s)
 		return;
 	}
 	_print_rev_recursion(s + 1);
-	_putchar(*s); /* Print the current character
+	_putchar(*s);
 }
