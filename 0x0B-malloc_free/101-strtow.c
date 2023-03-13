@@ -1,76 +1,73 @@
-#include <stdio.h>
 #include <stdlib.h>
 
 /**
- * count_words - count the number of words in a string
- * @str: the input string
+ * count_words - Counts the number of words in a string.
+ * @str: String to count.
  *
- * Return: the number of words in the string
+ * Return: Number of words in @str.
  */
 int count_words(char *str)
 {
-	int count = 0;
-	int i;
+	int count = 0, i, is_word = 0;
 
-	for (i = 0; str[i] != '\0'; i++)
+	for (i = 0; str[i]; i++)
 	{
-		if (str[i] != ' ' && (str[i + 1] == ' ' || str[i + 1] == '\0'))
+		if (str[i] != ' ' && !is_word)
+		{
+			is_word = 1;
 			count++;
+		}
+		else if (str[i] == ' ')
+			is_word = 0;
 	}
 
-	return count;
+	return (count);
 }
 
 /**
- * strtow - split a string into words
- * @str: the input string
+ * strtow - Splits a string into words.
+ * @str: String to split.
  *
- * Return: a pointer to an array of strings (words)
+ * Return: Pointer to an array of strings (words).
  */
 char **strtow(char *str)
 {
-	char **words;
-	int i, j, k, n, count;
+	int i, j, k = 0, len = 0, words = 0;
+	char **arr;
 
 	if (str == NULL || str[0] == '\0')
-		return NULL;
+		return (NULL);
 
-	count = count_words(str);
+	words = count_words(str);
+	if (words == 0)
+		return (NULL);
 
-	words = malloc((count + 1) * sizeof(char *));
+	arr = malloc(sizeof(char *) * (words + 1));
+	if (arr == NULL)
+		return (NULL);
 
-	if (words == NULL)
-	return NULL;
-
-	for (i = 0, k = 0; i < count; i++)
+	for (i = 0; str[i] && k < words; i++)
 	{
-		while (str[k] == ' ')
-			k++;
-
-		n = 0;
-		while (str[k + n] != ' ' && str[k + n] != '\0')
-			n++;
-
-		words[i] = malloc((n + 1) * sizeof(char));
-
-		if (words[i] == NULL)
+		if (str[i] != ' ')
 		{
-			for (j = 0; j < i; j++)
-				free(words[j]);
-
-		free(words);
-		return NULL;
+			len = 1;
+			for (j = i + 1; str[j] && str[j] != ' '; j++)
+				len++;
+			arr[k] = malloc(sizeof(char) * (len + 1));
+			if (arr[k] == NULL)
+			{
+				for (k--; k >= 0; k--)
+					free(arr[k]);
+				free(arr);
+				return (NULL);
+			}
+			for (j = 0; j < len; j++, i++)
+				arr[k][j] = str[i];
+			arr[k++][j] = '\0';
 		}
-
-		for (j = 0; j < n; j++)
-			words[i][j] = str[k + j];
-
-		words[i][j] = '\0';
-
-		k += n;
 	}
 
-	words[i] = NULL;
-
-	return words;
+	arr[k] = NULL;
+	return (arr);
 }
+
