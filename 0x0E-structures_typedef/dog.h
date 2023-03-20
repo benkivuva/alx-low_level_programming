@@ -17,6 +17,9 @@ struct dog
 	char *owner;
 };
 
+<<<<<<< HEAD
 void init_dog(struct dog *d, char *name, float age, char *owner);
 
+=======
+>>>>>>> 699fbe3bf2983f9c9e15f97f373bc02430dbafd7
 #endif /* DOG_H */
