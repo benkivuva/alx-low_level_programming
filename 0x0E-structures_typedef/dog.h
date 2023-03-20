@@ -17,9 +17,10 @@ struct dog
 	char *owner;
 };
 
-<<<<<<< HEAD
+typedef struct dog dog_t;
 void init_dog(struct dog *d, char *name, float age, char *owner);
+void print_dog(struct dog *d);
+dog_t *new_dog(char *name, float age, char *owner);
+void free_dog(dog_t *d);
 
-=======
->>>>>>> 699fbe3bf2983f9c9e15f97f373bc02430dbafd7
-#endif /* DOG_H */
+#endif /*DOG_H*/
