@@ -5,7 +5,7 @@
  *
  * @array: Pointer to the integer array
  * @size: Size of the array
- * @action: Pointer to a function that takes an integer as argument and returns void
+ * @action: Pointer to a function that takes an integer as argument
  *
  * Return: void
  */
