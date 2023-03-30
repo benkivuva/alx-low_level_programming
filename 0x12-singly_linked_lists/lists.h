@@ -3,10 +3,11 @@
 
 /*
 * Desc: header file containinf prototypes and definitions
-*	for all functions and types written in this proj
+*	for all functions and types written in this project
 */
 
 #include <stdlib.h>
+#include <stdio.h>
 
 /**
  * struct list_s - singly linked list
