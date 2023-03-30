@@ -1,7 +1,8 @@
-#ifndef LIST_H
-#define LIST_H
+#ifndef _LISTS_H_
+#define _LISTS_H_
 
 #include <stdlib.h>
+#include <stdio.h>
 
 /* Structure for a singly linked list node */
 typedef struct list_s
