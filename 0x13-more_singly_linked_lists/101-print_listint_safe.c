@@ -1,49 +1,32 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "lists.h"
 
 /**
- * print_listint_safe - prints a listint_t linked list
- * @head: pointer to the first node of the list
+ * print_listint_safe - Prints a listint_t linked list.
  *
- * Return: the number of nodes in the list
+ * @head: A pointer to the head of the listint_t list.
+ *
+ * Return: The number of nodes in the list.
  */
 size_t print_listint_safe(const listint_t *head)
 {
-    const listint_t *slow = head, *fast = head;
-    size_t count = 0;
+	const listint_t *current;
+	const listint_t *temp;
+	size_t tally;
 
-    while (slow && fast && fast->next)
-    {
-        printf("[%p] %d\n", (void *)slow, slow->n);
-        count++;
+	tally = 0;
+	current = head;
 
-        slow = slow->next;
-        fast = fast->next->next;
-
-        if (slow == fast)
-        {
-            printf("[%p] %d\n", (void *)slow, slow->n);
-            count++;
-
-            slow = slow->next;
-            while (slow != fast)
-            {
-                printf("[%p] %d\n", (void *)slow, slow->n);
-                count++;
-                slow = slow->next;
-            }
-            printf("Loop starts at [%p] %d\n", (void *)slow, slow->n);
-            return count;
-        }
-    }
-
-    while (slow)
-    {
-        printf("[%p] %d\n", (void *)slow, slow->n);
-        count++;
-        slow = slow->next;
-    }
-
-    return count;
+	while (current != NULL)
+	{
+		printf("[%p] %d\n", (void *)current, current->n);
+		tally++;
+		temp = current;
+		current = current->next;
+		if (temp <= current)
+		{
+			printf("-> [%p] %d\n", (void *)current, current->n);
+			exit(98);
+		}
+	}
+	return (tally);
 }
