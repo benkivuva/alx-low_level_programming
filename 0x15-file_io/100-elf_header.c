@@ -2,62 +2,78 @@
 #include <elf.h>
 
 /**
- * display_elf_header - displays the information contained in the ELF header at the start of an ELF file
- * @filename: name of the ELF file
- */
-void display_elf_header(const char *filename)
-{
-	int fd;
-	Elf64_Ehdr elf_header;
-
-	/* Open the file and check for errors*/
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-	{
-		fprintf(stderr, "Error: Failed to open file '%s'.\n", filename);
-		exit(98);
-	}
-
-	/* Read the ELF header into memory*/
-	if (read(fd, &elf_header, sizeof(Elf64_Ehdr)) != sizeof(Elf64_Ehdr))
-	{
-		fprintf(stderr, "Error: Failed to read ELF header from file '%s'.\n", filename);
-		close(fd);
-		exit(98);
-	}
-
-	/* Print out the ELF header information*/
-	printf("Magic: %02x %02x %02x %02x\n", elf_header.e_ident[EI_MAG0],
-		elf_header.e_ident[EI_MAG1], elf_header.e_ident[EI_MAG2], elf_header.e_ident[EI_MAG3]);
-	printf("Class: %d-bit\n", elf_header.e_ident[EI_CLASS] == ELFCLASS32 ? 32 : 64);
-	printf("Data: %s-endian\n", elf_header.e_ident[EI_DATA] == ELFDATA2LSB ? "little" : "big");
-	printf("Version: %d\n", elf_header.e_ident[EI_VERSION]);
-	printf("OS/ABI: %d\n", elf_header.e_ident[EI_OSABI]);
-	printf("ABI Version: %d\n", elf_header.e_ident[EI_ABIVERSION]);
-	printf("Type: %d\n", elf_header.e_type);
-	printf("Entry point address: 0x%lx\n", elf_header.e_entry);
-
-	/* Close the file*/
-	close(fd);
-}
-
-/**
- * main - entry point of the program
- * @argc: number of arguments
- * @argv: array of arguments
+ * main - displays the ELF header of an ELF file
+ * @argc: the number of command-line arguments
+ * @argv: an array of command-line argument strings
  *
  * Return: 0 on success, 98 on error
  */
 int main(int argc, char *argv[])
 {
-	/* Check for correct usage*/
-	if (argc != 2)
-	{
-		fprintf(stderr, "Usage: %s elf_filename\n", argv[0]);
-		return (98);
-	}
+    int fd;
+    Elf64_Ehdr header;
 
-	display_elf_header(argv[1]);
+    /* Check for correct number of arguments */
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: %s elf_filename\n", argv[0]);
+        return (98);
+    }
 
-	return (0);
-}
+    /* Open the file for reading */
+    fd = open(argv[1], O_RDONLY);
+    if (fd == -1)
+    {
+        perror("open");
+        return (98);
+    }
+
+    /* Read the ELF header */
+    if (read(fd, &header, sizeof(header)) != sizeof(header))
+    {
+        fprintf(stderr, "Error reading ELF header\n");
+        close(fd);
+        return (98);
+    }
+
+    /* Verify that the file is an ELF file */
+    if (header.e_ident[EI_MAG0] != ELFMAG0 ||
+        header.e_ident[EI_MAG1] != ELFMAG1 ||
+        header.e_ident[EI_MAG2] != ELFMAG2 ||
+        header.e_ident[EI_MAG3] != ELFMAG3)
+    {
+        fprintf(stderr, "File is not an ELF file\n");
+        close(fd);
+        return (98);
+    }
+
+    /* Print the ELF header information */
+    printf("Magic:   %02x %02x %02x %02x\n",
+           header.e_ident[EI_MAG0],
+           header.e_ident[EI_MAG1],
+           header.e_ident[EI_MAG2],
+           header.e_ident[EI_MAG3]);
+
+    printf("Class:                             %s\n",
+           header.e_ident[EI_CLASS] == ELFCLASS64 ? "ELF64" :
+           header.e_ident[EI_CLASS] == ELFCLASS32 ? "ELF32" :
+           header.e_ident[EI_CLASS] == ELFCLASSNONE ? "none" : "unknown");
+
+    printf("Data:                              %s\n",
+           header.e_ident[EI_DATA] == ELFDATA2LSB ? "2's complement, little endian" :
+           header.e_ident[EI_DATA] == ELFDATA2MSB ? "2's complement, big endian" :
+           header.e_ident[EI_DATA] == ELFDATANONE ? "none" : "unknown");
+
+    printf("Version:                           %d\n",
+           header.e_ident[EI_VERSION]);
+
+    printf("OS/ABI:                            %s\n",
+           header.e_ident[EI_OSABI] == ELFOSABI_SYSV ? "UNIX - System V" :
+           header.e_ident[EI_OSABI] == ELFOSABI_HPUX ? "UNIX - HP-UX" :
+           header.e_ident[EI_OSABI] == ELFOSABI_NETBSD ? "UNIX - NetBSD" :
+           header.e_ident[EI_OSABI] == ELFOSABI_LINUX ? "UNIX - Linux" :
+           header.e_ident[EI_OSABI] == ELFOSABI_SOLARIS ? "UNIX - Solaris" :
+           header.e_ident[EI_OSABI] == ELFOSABI_AIX ? "UNIX - AIX" :
+           header.e_ident[EI_OSABI] == ELFOSABI_IRIX ? "UNIX - IRIX" :
+           header.e_ident[EI_OSABI] == ELFOSABI_FREEBSD ? "
+
