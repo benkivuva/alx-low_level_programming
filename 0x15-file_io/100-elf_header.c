@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/mman.h>
 
 #define EI_NIDENT 16
 
@@ -94,4 +97,15 @@ void display_elf_header(const Elf64_Ehdr *ehdr) {
     switch (ehdr->e_type) {
         case 1:
             printf("REL (Relocatable file)\n");
+            break;
+        case 2:
+            printf("EXEC (Executable file)\n");
+            break;
+        case 3:
+            printf("DYN (Shared object file)\n");
+            break;
+        default:
+            printf("Unknown\n");
+            break;
+    } 
 
