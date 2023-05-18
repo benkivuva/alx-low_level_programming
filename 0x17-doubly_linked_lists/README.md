@@ -1,1 +1,1 @@
-Doubly linked lists project
+Doubly linked lists project.
