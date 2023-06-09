@@ -5,7 +5,8 @@
  * hash_table_print - Prints the key/value pairs in a hash table.
  * @ht: The hash table to print.
  *
- * Description: This function prints the key/value pairs in the order they appear in the hash table,
+ * Description: This function prints the key/value pairs in the order they
+ * appear in the hash table,
  * following the format: `{array index}: key: value`
  * If the hash table is NULL, nothing is printed.
  */
